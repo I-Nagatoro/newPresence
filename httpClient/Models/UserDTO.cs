@@ -2,7 +2,7 @@
 
 public class ClientDeleteUsersRequest
 {
-    public List<Guid> UsersGuid { get; set; } = new();
+    public List<int> UsersId { get; set; } = new();
 }
 
 public class FIOUpdate
@@ -18,5 +18,5 @@ public class CreateUserRequest
 {
     public string Fio { get; set; }
         
-    public string GroupName { get; set; }
+    public int GroupId { get; set; }
 }

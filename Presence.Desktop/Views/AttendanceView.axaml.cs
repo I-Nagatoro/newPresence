@@ -11,7 +11,7 @@ namespace Presence.Desktop.Views
         public AttendanceView()
         {
             InitializeComponent();
-            DataContext = App.Services.GetRequiredService<AttendanceViewModel>();
+            DataContext = App.ServiceProvider.GetRequiredService<AttendanceViewModel>(); // Используем ServiceProvider
         }
 
         private void OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)

@@ -202,3 +202,6 @@ C:\Users\sokol\source\repos\Presence.Desktop\Presence.Desktop\bin\Debug\net8.0\M
 C:\Users\sokol\source\repos\Presence.Desktop\Presence.Desktop\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
 C:\Users\sokol\source\repos\Presence.Desktop\Presence.Desktop\bin\Debug\net8.0\Microsoft.Extensions.Http.dll
 C:\Users\sokol\source\repos\Presence.Desktop\Presence.Desktop\bin\Debug\net8.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Users\sokol\source\repos\Presence.Desktop\Presence.Desktop\bin\Debug\net8.0\httpClient.dll
+C:\Users\sokol\source\repos\Presence.Desktop\Presence.Desktop\bin\Debug\net8.0\httpClient.pdb
+C:\Users\sokol\source\repos\Presence.Desktop\Presence.Desktop\obj\Debug\net8.0\Presence.Desktop.sourcelink.json

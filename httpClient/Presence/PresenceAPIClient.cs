@@ -13,7 +13,7 @@ public class PresenceAPIClient : BaseAPIClient, IPresenceAPIClient
     {
     }
 
-    public async Task<PresenceResponse?> GetPresenceAsync(int groupId, string startDate, string endDate)
+    public async Task<PresenceResponse?> GetPresenceAsync(int groupId, DateOnly startDate, DateOnly endDate)
     {
         try
         {

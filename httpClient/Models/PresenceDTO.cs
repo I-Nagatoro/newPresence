@@ -2,7 +2,7 @@
 
 namespace httpClient.Group.Models;
 
-    public class PresenceDAO
+    public class PresenceDTO
     {
         public DateTime Date { get; set; }
         public int LessonNumber { get; set; }

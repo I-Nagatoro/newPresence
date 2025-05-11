@@ -20,11 +20,11 @@
             <TextBox x:Name="_nameTextBox" Text="{Binding FIO, Mode=TwoWay}"/>
 
             <TextBlock Text="Группа" FontWeight="Bold"/>
-            <ComboBox ItemsSource="Group" x:Name="_groupComboBox"
+            <ComboBox ItemsSource="{Binding Groups}" x:Name="_groupComboBox" 
                       SelectedItem="{Binding SelectedGroupItem}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"></TextBlock>
+                        <TextBlock Text="{Binding Name}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

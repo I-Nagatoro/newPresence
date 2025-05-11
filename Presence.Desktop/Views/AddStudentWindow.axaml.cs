@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
-using data.Domain.UseCase;
 using data.RemoteData.RemoteDatabase.DAO;
+using httpClient.Group;
+using httpClient.User;
 using Presence.Desktop.ViewModels;
 
 namespace Presence.Desktop.Views
@@ -12,12 +13,12 @@ namespace Presence.Desktop.Views
             InitializeComponent();
         }
 
-        public AddStudentWindow(UserUseCase userUseCase, GroupUseCase groupUseCase, GroupDAO preselectedGroup)
+        public AddStudentWindow(UserAPIClient userClient, GroupAPIClient groupClient, GroupDAO preselectedGroup)
         {
             InitializeComponent();
 
-            var viewModel = new AddStudentViewModel(userUseCase, groupUseCase, preselectedGroup);
-            viewModel.CloseAction = () => this.Close();
+            var viewModel = new AddStudentViewModel(userClient, groupClient, preselectedGroup);
+            viewModel.CloseAction = Close;
             DataContext = viewModel;
         }
     }

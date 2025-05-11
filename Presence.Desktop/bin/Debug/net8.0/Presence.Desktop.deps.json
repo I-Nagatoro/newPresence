@@ -19,7 +19,8 @@
           "Microsoft.Extensions.Http": "8.0.1",
           "System.Net.Http": "4.3.4",
           "data": "1.0.0",
-          "domain": "1.0.0"
+          "domain": "1.0.0",
+          "httpClient": "1.0.0"
         },
         "runtime": {
           "Presence.Desktop.dll": {}
@@ -1226,6 +1227,19 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "httpClient/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Http": "8.0.1",
+          "System.Net.Http": "4.3.4",
+          "data": "1.0.0"
+        },
+        "runtime": {
+          "httpClient.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -2039,6 +2053,11 @@
       "sha512": ""
     },
     "domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "httpClient/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

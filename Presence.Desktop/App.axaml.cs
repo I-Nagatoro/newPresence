@@ -1,18 +1,20 @@
 using System;
-using Presence.Desktop.ViewModels;
-using Presence.Desktop.Views;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using data.Domain.UseCase;
+using httpClient.Group;
+using httpClient.User;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Presence.Desktop.DI;
+using Presence.Desktop.ViewModels;
+using Presence.Desktop.Views;
 
 namespace Presence.Desktop
 {
     public partial class App : Application
     {
-        public static IServiceProvider Services { get; private set; }
+        public static IServiceProvider? ServiceProvider { get; private set; }
 
         public override void Initialize()
         {
@@ -21,21 +23,31 @@ namespace Presence.Desktop
 
         public override void OnFrameworkInitializationCompleted()
         {
+            // Создаём коллекцию сервисов
             var serviceCollection = new ServiceCollection();
+
+            // Добавляем все сервисы, в том числе GroupAPIClient и UserAPIClient
             serviceCollection.AddCommonService();
-            serviceCollection.AddSingleton<GroupUseCase>();
-            serviceCollection.AddSingleton<UserUseCase>();
-            Services = serviceCollection.BuildServiceProvider();
 
-            var mainViewModel = Services.GetRequiredService<MainWindowViewModel>();
-            var groupUseCase  = Services.GetRequiredService<GroupUseCase>();
-            var userUseCase   = Services.GetRequiredService<UserUseCase>();
+            // Добавляем логирование
+            serviceCollection.AddLogging(builder => 
+            {
+                builder.SetMinimumLevel(LogLevel.Debug);
+            });
 
+            // Строим контейнер зависимостей
+            ServiceProvider = serviceCollection.BuildServiceProvider();
+
+            // Получаем GroupAPIClient и UserAPIClient после построения ServiceProvider
+            var groupAPIClient = ServiceProvider.GetService<GroupAPIClient>();
+            var userAPIClient = ServiceProvider.GetService<UserAPIClient>();
+
+            // Инициализируем главное окно
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow(groupUseCase, userUseCase)
+                desktop.MainWindow = new MainWindow(groupAPIClient, userAPIClient)
                 {
-                    DataContext = mainViewModel
+                    DataContext = new MainWindowViewModel(groupAPIClient, userAPIClient),
                 };
             }
 

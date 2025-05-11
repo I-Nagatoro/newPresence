@@ -1,36 +1,29 @@
 ﻿using ReactiveUI;
-using data.Domain.UseCase;
 using data.RemoteData.RemoteDatabase.DAO;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
+using httpClient.Group;
+using httpClient.User;
 
 namespace Presence.Desktop.ViewModels
 {
     public class AddStudentViewModel : ReactiveObject
     {
-        private readonly UserUseCase _userUseCase;
-        private readonly GroupUseCase _groupUseCase;
+        private readonly UserAPIClient _userClient;
+        private readonly GroupAPIClient _groupClient;
         private readonly GroupDAO _preselectedGroup;
 
         public ObservableCollection<GroupDAO> Groups { get; } = new ObservableCollection<GroupDAO>();
 
-        public AddStudentViewModel(UserUseCase userUseCase, 
-                                 GroupUseCase groupUseCase,
-                                 GroupDAO preselectedGroup)
+        public AddStudentViewModel(UserAPIClient userClient,
+                                   GroupAPIClient groupClient,
+                                   GroupDAO preselectedGroup)
         {
-            _userUseCase = userUseCase;
-            _groupUseCase = groupUseCase;
+            _userClient = userClient;
+            _groupClient = groupClient;
             _preselectedGroup = preselectedGroup;
-
-            var groups = _groupUseCase.GetAllGroups();
-            foreach (var group in groups)
-            {
-                Groups.Add(group);
-            }
-
-            SelectedGroup = Groups.FirstOrDefault(g => g.Id == _preselectedGroup.Id);
 
             AddStudentCommand = ReactiveCommand.CreateFromTask(
                 AddStudentAsync,
@@ -39,6 +32,9 @@ namespace Presence.Desktop.ViewModels
                     x => x.SelectedGroup,
                     (fio, group) => !string.IsNullOrWhiteSpace(fio) && group != null)
             );
+
+            // Запустить загрузку групп асинхронно
+            LoadGroupsAsync();
         }
 
         private string _fio;
@@ -57,15 +53,38 @@ namespace Presence.Desktop.ViewModels
 
         public ReactiveCommand<Unit, Unit> AddStudentCommand { get; }
 
+        private async Task LoadGroupsAsync()
+        {
+            try
+            {
+                var groups = await _groupClient.GetGroupsAsync();
+                if (groups != null)
+                {
+                    Groups.Clear();
+                    foreach (var group in groups)
+                    {
+                        Groups.Add(group);
+                    }
+
+                    if (_preselectedGroup != null)
+                    {
+                        SelectedGroup = Groups.FirstOrDefault(g => g.Id == _preselectedGroup.Id);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                // Здесь можно логировать или показывать ошибку
+                System.Diagnostics.Debug.WriteLine($"Ошибка загрузки групп: {ex.Message}");
+            }
+        }
+
         private async Task AddStudentAsync()
         {
-            var newStudent = new UserDAO
-            {
-                FIO = FIO.Trim(),
-                GroupId = SelectedGroup.Id
-            };
+            if (SelectedGroup == null || string.IsNullOrWhiteSpace(FIO))
+                return;
 
-            await _userUseCase.AddUserAsync(newStudent);
+            await _userClient.CreateUser(FIO,SelectedGroup.Id);
             CloseAction?.Invoke();
         }
 

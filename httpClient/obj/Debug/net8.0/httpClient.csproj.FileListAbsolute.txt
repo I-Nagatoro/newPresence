@@ -1,0 +1,16 @@
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\bin\Debug\net8.0\httpClient.deps.json
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\bin\Debug\net8.0\httpClient.dll
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\bin\Debug\net8.0\httpClient.pdb
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\bin\Debug\net8.0\data.dll
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\bin\Debug\net8.0\data.pdb
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.csproj.AssemblyReference.cache
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.AssemblyInfoInputs.cache
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.AssemblyInfo.cs
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.csproj.CoreCompileInputs.cache
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.sourcelink.json
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.csproj.Up2Date
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.dll
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\refint\httpClient.dll
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\httpClient.pdb
+C:\Users\sokol\source\repos\Presence.Desktop\httpClient\obj\Debug\net8.0\ref\httpClient.dll

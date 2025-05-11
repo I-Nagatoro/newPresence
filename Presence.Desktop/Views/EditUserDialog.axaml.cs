@@ -4,6 +4,8 @@ using data.RemoteData.RemoteDatabase.DAO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using data.Domain.UseCase;
+using httpClient.Group;
+using httpClient.User;
 using Microsoft.Extensions.DependencyInjection;
 using Presence.Desktop.ViewModels;
 
@@ -13,12 +15,14 @@ namespace Presence.Desktop.Views
     {
         private GroupUseCase _groupUseCase;
         private UserUseCase _userUseCase;
+        private GroupAPIClient _groupAPIClient;
+        private UserAPIClient _userAPIClient;
         public EditUserDialog()
         {
             InitializeComponent();
         }
 
-        public EditUserDialog(GroupUseCase groupUseCase, UserUseCase userUseCase, int currentUserId,
+        public EditUserDialog(GroupAPIClient _groupAPIClient, UserAPIClient _userAPIClient, int currentUserId,
             string currentName,
             int currentGroupId,
             List<GroupDAO> groups)
@@ -28,7 +32,7 @@ namespace Presence.Desktop.Views
             _nameTextBox = this.FindControl<TextBox>("_nameTextBox");
             _groupComboBox = this.FindControl<ComboBox>("_groupComboBox");
             
-            var viewModel = new EditViewModel(groupUseCase, userUseCase);
+            var viewModel = new EditViewModel(_groupAPIClient, _userAPIClient);
             viewModel.CloseAction = this.Close;
             DataContext = viewModel;
             viewModel.UserId = currentUserId;

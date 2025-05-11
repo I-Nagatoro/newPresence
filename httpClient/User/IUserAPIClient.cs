@@ -2,8 +2,8 @@
 
 public interface IUserAPIClient
 {
-    Task<bool> DeleteUserAsync(Guid userGuid);
-    Task<bool> UpdateUserFioAsync(Guid userGuid, string fio);
+    Task<bool> DeleteUserAsync(int userId);
     Task<bool> DeleteUsersByGroupIdAsync(int groupId);
-    Task<bool> CreateUser(string fio, string groupName);
+    Task<bool> CreateUser(string fio, int groupId);
+    Task UpdateUser(int userId, string newFio, int newGroupId);
 }

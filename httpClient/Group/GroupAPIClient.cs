@@ -1,4 +1,5 @@
-﻿using httpClient.Group.Models;
+﻿using data.RemoteData.RemoteDatabase.DAO;
+using httpClient.Group.Models;
 using Microsoft.Extensions.Logging;
 
 namespace httpClient.Group;
@@ -20,5 +21,16 @@ public class GroupAPIClient : BaseAPIClient, IGroupAPIClient
     public async Task<List<GroupWithStudentDAO>> GetGroupsWithUsersAsync()
     {
         return await GetAsync<List<GroupWithStudentDAO>>("Admin") ?? new List<GroupWithStudentDAO>();
+    }
+
+    public async Task RemoveAllUsersFromGroup(int groupId)
+    {
+        var response = await _httpClient.DeleteAsync($"/api/groups/{groupId}/users");
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            throw new Exception($"Ошибка при удалении студентов из группы {groupId}: {response.StatusCode} - {content}");
+        }
     }
 }

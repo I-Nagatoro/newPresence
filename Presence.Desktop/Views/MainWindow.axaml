@@ -8,69 +8,56 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Presence.Desktop"
         x:DataType="vm:MainWindowViewModel"
-		xmlns:local="clr-namespace:Presence.Desktop.ViewModels"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-	<DockPanel Background="White">
-		<StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="20">
-			<ComboBox Foreground="Black" ItemsSource="{Binding Groups}" SelectedValue="{Binding SelectedGroupItem}" HorizontalAlignment="Center" Width="300" Margin="5">
-				<ComboBox.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding Name}" />
-					</DataTemplate>
-				</ComboBox.ItemTemplate>
-			</ComboBox>
+    <DockPanel Background="White">
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="20">
+            <ComboBox Foreground="Black" 
+                      ItemsSource="{Binding Groups}" 
+                      SelectedValue="{Binding SelectedGroupItem}" 
+                      HorizontalAlignment="Center" 
+                      Width="300" Margin="5">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
-			<ComboBox Foreground="Black" ItemsSource="{Binding SortOptions}" SelectedItem="{Binding SelectedSortOption}" HorizontalAlignment="Center" Width="300" Margin="10">
-				<ComboBox.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding}" />
-					</DataTemplate>
-				</ComboBox.ItemTemplate>
-			</ComboBox>
-			<StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
-				<Button Foreground="Black"
-						Content="Удалить всех студентов"
-						Command="{Binding RemoveAllStudentsCommand}"
-						HorizontalAlignment="Center"
-						Width="250"
-						Margin="10"/>
-				<Button Foreground="Black"
-						Content="Добавить студента"
-						Command="{Binding AddStudentCommand}"
-						HorizontalAlignment="Center"
-						Width="250"
-						Margin="10"/>
-				<Button Foreground="Black"
-						Content="Просмотр расписания"
-						Command="{Binding GoPresenceScreen}"
-						HorizontalAlignment="Center"
-						Width="250"
-						Margin="10"/>
-			</StackPanel>
-		</StackPanel>
-		<ListBox ItemsSource="{Binding Users}"
-				 HorizontalAlignment="Center"
-				 Width="350"
-				 Background="Bisque"
-				 Margin="10"
-				 SelectionMode="Multiple"
-				 SelectedItems="{Binding SelectedUsers}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<StackPanel Orientation="Horizontal" Margin="5">
-						<TextBlock Foreground="Black" Text="{Binding FIO}" VerticalAlignment="Center" />
-					</StackPanel>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
+            <ComboBox Foreground="Black" 
+                      ItemsSource="{Binding SortOptions}" 
+                      SelectedItem="{Binding SelectedSortOption}" 
+                      HorizontalAlignment="Center" 
+                      Width="300" Margin="10">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
-			<ListBox.ContextMenu>
-				<ContextMenu>
-					<MenuItem Header="Удалить" Click="OnDeleteUserClick"/>
-					<MenuItem Header="Редактировать" Click="OnEditUserClick"/>
-				</ContextMenu>
-			</ListBox.ContextMenu>
-		</ListBox>
-	</DockPanel>
+            <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+                <Button Foreground="Black" Content="Удалить всех студентов" Command="{Binding RemoveAllStudentsCommand}" HorizontalAlignment="Center" Width="250" Margin="10"/>
+                <Button Foreground="Black" Content="Добавить студента" Command="{Binding AddStudentCommand}" HorizontalAlignment="Center" Width="250" Margin="10"/>
+                <Button Foreground="Black" Content="Просмотр расписания" Command="{Binding GoPresenceScreen}" HorizontalAlignment="Center" Width="250" Margin="10"/>
+            </StackPanel>
+        </StackPanel>
+
+        <ListBox ItemsSource="{Binding Users}" HorizontalAlignment="Center" Width="350" Background="Bisque" Margin="10" SelectionMode="Multiple" SelectedItems="{Binding SelectedUsers}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Foreground="Black" Text="{Binding FIO}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить" Command="{Binding OnDeleteUserClicks}"/>
+                    <MenuItem Header="Редактировать" Command="{Binding EditUserCommand}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+    </DockPanel>
 </Window>
-

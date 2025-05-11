@@ -2033,6 +2033,21 @@
         "runtime": {
           "bin/placeholder/domain.dll": {}
         }
+      },
+      "httpClient/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.Extensions.Http": "8.0.1",
+          "System.Net.Http": "4.3.4",
+          "data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/httpClient.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/httpClient.dll": {}
+        }
       }
     }
   },
@@ -5982,6 +5997,11 @@
       "type": "project",
       "path": "../domain/domain.csproj",
       "msbuildProject": "../domain/domain.csproj"
+    },
+    "httpClient/1.0.0": {
+      "type": "project",
+      "path": "../httpClient/httpClient.csproj",
+      "msbuildProject": "../httpClient/httpClient.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5997,7 +6017,8 @@
       "Microsoft.Extensions.Http >= 8.0.1",
       "System.Net.Http >= 4.3.4",
       "data >= 1.0.0",
-      "domain >= 1.0.0"
+      "domain >= 1.0.0",
+      "httpClient >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -6037,6 +6058,9 @@
             },
             "C:\\Users\\sokol\\source\\repos\\Presence.Desktop\\domain\\domain.csproj": {
               "projectPath": "C:\\Users\\sokol\\source\\repos\\Presence.Desktop\\domain\\domain.csproj"
+            },
+            "C:\\Users\\sokol\\source\\repos\\Presence.Desktop\\httpClient\\httpClient.csproj": {
+              "projectPath": "C:\\Users\\sokol\\source\\repos\\Presence.Desktop\\httpClient\\httpClient.csproj"
             }
           }
         }

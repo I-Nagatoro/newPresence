@@ -2,22 +2,23 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reactive;
+using System.Threading.Tasks;
 using Avalonia.Threading;
-using data.Domain.UseCase;
 using data.RemoteData.RemoteDatabase.DAO;
-using DynamicData;
+using httpClient.Group;
+using httpClient.Presence;
 using ReactiveUI;
 
 public class AttendanceViewModel : ReactiveObject
 {
-    private readonly GroupUseCase _groupUseCase;
-    private readonly PresenceUseCase _presenceUseCase;
-    
+    private readonly GroupAPIClient _groupApiClient;
+    private readonly PresenceAPIClient _presenceApiClient;
+
     public ObservableCollection<GroupDAO> Groups { get; } = new ObservableCollection<GroupDAO>();
     public ObservableCollection<PresenceDAO> Presences { get; } = new ObservableCollection<PresenceDAO>();
-    
-    private GroupDAO _selectedGroup;
-    public GroupDAO SelectedGroup
+
+    private GroupDAO? _selectedGroup;
+    public GroupDAO? SelectedGroup
     {
         get => _selectedGroup;
         set => this.RaiseAndSetIfChanged(ref _selectedGroup, value);
@@ -40,16 +41,15 @@ public class AttendanceViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> LoadDataCommand { get; }
 
     public AttendanceViewModel(
-        GroupUseCase groupUseCase,
-        PresenceUseCase presenceUseCase)
+        GroupAPIClient groupApiClient,
+        PresenceAPIClient presenceApiClient)
     {
-        _groupUseCase = groupUseCase;
-        _presenceUseCase = presenceUseCase;
+        _groupApiClient = groupApiClient;
+        _presenceApiClient = presenceApiClient;
 
-        var groups = _groupUseCase.GetAllGroups();
-        Groups.AddRange(groups);
+        LoadGroups();
 
-        LoadDataCommand = ReactiveCommand.Create(LoadData);
+        LoadDataCommand = ReactiveCommand.CreateFromTask(async () => await LoadData());
 
         this.WhenAnyValue(
             x => x.SelectedGroup,
@@ -58,25 +58,51 @@ public class AttendanceViewModel : ReactiveObject
         ).Subscribe(_ => LoadDataCommand.Execute().Subscribe());
     }
 
-    private void LoadData()
+    private async void LoadGroups()
+    {
+        var groups = await _groupApiClient.GetGroupsAsync();
+        Groups.Clear();
+        foreach (var group in groups)
+            Groups.Add(group);
+    }
+
+    private async Task LoadData()
     {
         Presences.Clear();
 
-        if (SelectedGroup == null) return;
+        if (SelectedGroup == null)
+            return;
 
-        var presences = _presenceUseCase.GetPresenceByGroupAndDate(
-            SelectedGroup.Id, 
-            StartDate, 
-            EndDate);
-
-        Debug.WriteLine($"Загружено записей: {presences.Count}");
-
-
-        foreach (var p in presences)
+        try
         {
-            Dispatcher.UIThread.Post(() => Presences.Add(p));
-        }
+            var response = await _presenceApiClient.GetPresenceAsync(
+                SelectedGroup.Id,
+                StartDate,
+                EndDate);
 
-        this.RaisePropertyChanged(nameof(Presences));
+            if (response?.Users == null)
+                return;
+
+            foreach (var u in response.Users)
+            {
+                var presence = new PresenceDAO
+                {
+                    UserId = u.UserId,
+                    LessonNumber = u.LessonNumber,
+                    Date = u.Date,
+                    IsAttendance = u.IsAttendance
+                };
+
+                Dispatcher.UIThread.Post(() => Presences.Add(presence));
+            }
+
+            this.RaisePropertyChanged(nameof(Presences));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при загрузке данных посещаемости: {ex.Message}");
+            Presences.Clear();
+        }
     }
+
 }

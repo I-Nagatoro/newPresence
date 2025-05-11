@@ -3,27 +3,21 @@ using Avalonia.Interactivity;
 using data.Domain.UseCase;
 using Presence.Desktop.ViewModels;
 using data.domain.Models;
+using httpClient.Group;
+using httpClient.Presence;
+using httpClient.User;
 
 namespace Presence.Desktop.Views
 {
     public partial class MainWindow : Window
     {
-        public MainWindow(GroupUseCase groupUseCase, UserUseCase userUseCase)
+        private GroupAPIClient _groupAPIClient;
+        private PresenceAPIClient _presenceAPIClient;
+        private UserAPIClient _userAPIClient;
+        public MainWindow(GroupAPIClient _groupAPIClient, UserAPIClient _userAPIClient)
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(groupUseCase, userUseCase);
-        }
-
-        private void OnDeleteUserClick(object sender, RoutedEventArgs e)
-        {
-            var viewModel = (MainWindowViewModel)DataContext;
-            viewModel.OnDeleteUserClick();
-        }
-
-        private void OnEditUserClick(object sender, RoutedEventArgs e)
-        {
-            var viewModel = (MainWindowViewModel)DataContext;
-            viewModel.OnEditUserClick();
+            DataContext = new MainWindowViewModel(_groupAPIClient, _userAPIClient);
         }
     }
 

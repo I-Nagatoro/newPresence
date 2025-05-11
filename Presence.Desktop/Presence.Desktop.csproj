@@ -39,6 +39,7 @@
   <ItemGroup>
     <ProjectReference Include="..\data\data.csproj" />
     <ProjectReference Include="..\domain\domain.csproj" />
+    <ProjectReference Include="..\httpClient\httpClient.csproj" />
   </ItemGroup>
 
   <ItemGroup>

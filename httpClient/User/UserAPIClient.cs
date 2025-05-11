@@ -14,11 +14,11 @@ public class UserAPIClient : BaseAPIClient, IUserAPIClient
     {
     }
 
-    public async Task<bool> DeleteUserAsync(Guid userGuid)
+    public async Task<bool> DeleteUserAsync(int userId)
     {
         try
         {
-            var responce = await _httpClient.DeleteAsync($"{BasePath}/user?userGuid={userGuid}");
+            var responce = await _httpClient.DeleteAsync($"{BasePath}/user?userGuid={userId}");
             return responce.IsSuccessStatusCode;
         }
         catch (Exception ex)
@@ -28,23 +28,21 @@ public class UserAPIClient : BaseAPIClient, IUserAPIClient
         }
     }
 
-    public async Task<bool> UpdateUserFioAsync(Guid userGuid, string fio)
+    public async Task UpdateUser(int userId, string newFio, int newGroupId)
     {
-        try
+        var userUpdateData = new
         {
-            var request = new FIOUpdate { Fio = fio };
-        
-            var response = await _httpClient.PatchAsJsonAsync(
-                $"{BasePath}/updatefio/user/{userGuid}", 
-                request, 
-                _jsonOptions);
-            
-            return response.IsSuccessStatusCode;
-        }
-        catch (Exception ex)
+            UserId = userId,
+            FIO = newFio,
+            GroupId = newGroupId
+        };
+
+        var response = await _httpClient.PutAsJsonAsync($"/api/users/{userId}", userUpdateData);
+
+        if (!response.IsSuccessStatusCode)
         {
-            _logger.LogError(ex, "Не удалось обновить ФИО");
-            return false;
+            var content = await response.Content.ReadAsStringAsync();
+            throw new Exception($"Ошибка при обновлении пользователя {userId}: {response.StatusCode} - {content}");
         }
     }
     
@@ -61,12 +59,13 @@ public class UserAPIClient : BaseAPIClient, IUserAPIClient
             return false;
         }
     }
+    
 
-    public async Task<bool> CreateUser(string fio, string groupName)
+    public async Task<bool> CreateUser(string fio, int groupId)
     {
         try
         {
-            var request = new CreateUserRequest { Fio = fio, GroupName = groupName };
+            var request = new CreateUserRequest { Fio = fio, GroupId = groupId };
             var response = await _httpClient.PostAsJsonAsync($"{BasePath}/usercreate", request, _jsonOptions);
             return response.IsSuccessStatusCode;
         }

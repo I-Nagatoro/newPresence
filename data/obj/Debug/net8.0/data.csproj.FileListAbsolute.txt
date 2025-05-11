@@ -124,3 +124,4 @@ C:\Users\sokol\Source\Repos\Presence.Desktop1234\data\obj\Debug\net8.0\refint\da
 C:\Users\sokol\Source\Repos\Presence.Desktop1234\data\obj\Debug\net8.0\data.pdb
 C:\Users\sokol\Source\Repos\Presence.Desktop1234\data\obj\Debug\net8.0\data.genruntimeconfig.cache
 C:\Users\sokol\Source\Repos\Presence.Desktop1234\data\obj\Debug\net8.0\ref\data.dll
+C:\Users\sokol\source\repos\Presence.Desktop\data\obj\Debug\net8.0\data.sourcelink.json

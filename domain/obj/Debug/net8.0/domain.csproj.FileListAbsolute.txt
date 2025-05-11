@@ -133,3 +133,4 @@ C:\Users\sokol\Source\Repos\Presence.Desktop1234\domain\obj\Debug\net8.0\domain.
 C:\Users\sokol\Source\Repos\Presence.Desktop1234\domain\obj\Debug\net8.0\refint\domain.dll
 C:\Users\sokol\Source\Repos\Presence.Desktop1234\domain\obj\Debug\net8.0\domain.pdb
 C:\Users\sokol\Source\Repos\Presence.Desktop1234\domain\obj\Debug\net8.0\ref\domain.dll
+C:\Users\sokol\source\repos\Presence.Desktop\domain\obj\Debug\net8.0\domain.sourcelink.json
