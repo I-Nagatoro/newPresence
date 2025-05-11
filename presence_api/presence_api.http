@@ -1,0 +1,6 @@
+@presence_api_HostAddress = http://localhost:5035
+
+GET {{presence_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:Presence.Desktop.ViewModels;assembly=Presence.Desktop"
+        xmlns:local="clr-namespace:Presence.Desktop"
+        xmlns:global="clr-namespace:"
+        xmlns:typeConversion="clr-namespace:CsvHelper.TypeConversion;assembly=CsvHelper"
+        x:Class="Presence.Desktop.Views.AttendanceView"
+        x:DataType="global:AttendanceViewModel"
+        x:CompileBindings="False"
+        Title="Посещаемость"
+        Width="800" Height="600"
+        Padding="16">
+    <Grid RowDefinitions="Auto,Auto,*,Auto" ColumnDefinitions="Auto, *">
+        <ComboBox Grid.Column="1" 
+                  ItemsSource="{Binding Groups}" 
+                  SelectedItem="{Binding SelectedGroup}" 
+                  Width="200">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Grid.Row="1" Text="Выберите дату:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,16,8,0" />
+        <Calendar Grid.Row="1" Grid.Column="1" 
+                  SelectedDatesChanged="OnSelectedDatesChanged" 
+                  Margin="0,16,0,0" />
+
+        <Border Grid.Row="2" Grid.ColumnSpan="2" 
+                Padding="8" Margin="0,16,0,16">
+            <ListBox ItemsSource="{Binding Presences}" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                                CornerRadius="4" 
+                                Margin="0,4" 
+                                Padding="8">
+                            <StackPanel>
+                                <TextBlock Text="{Binding DateString}" 
+                                           FontWeight="Bold" 
+                                           FontSize="14"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,4">
+                                    <TextBlock Text="Пара: " FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding LessonNumber}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Студент: " FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding FIO}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Статус: " FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding Status}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,4">
+                                    <TextBlock Text="Группа: " FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding GroupId}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+    </Grid>
+</Window>

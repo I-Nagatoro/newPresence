@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\presence_api.props" />
+</Project>
